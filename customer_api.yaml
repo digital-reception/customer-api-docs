@@ -1,0 +1,283 @@
+---
+openapi: 3.0.3
+info:
+  title: Digital Reception API
+  version: 1.0.0
+servers:
+- url: https://api-demo.dreception.com
+  description: Demo API
+- url: https://api.dreception.com
+  description: Production API
+paths:
+  "/v1/c/cycle_api_keys":
+    post:
+      summary: cycle_api_keys
+      tags:
+      - Config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                key:
+                  type: string
+              required:
+              - key
+            example:
+              key: my primary key string
+      responses:
+        '200':
+          description: Cycles API Keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  primary_key:
+                    type: string
+                  secondary_key:
+                    type: string
+                  primary_key_valid_until:
+                    type: string
+                  secondary_key_valid_until:
+                    type: string
+                required:
+                - primary_key
+                - secondary_key
+                - primary_key_valid_until
+                - secondary_key_valid_until
+              example:
+                primary_key: my secondary key string
+                secondary_key: "-3NVWmE1ydkQ9SwqNT90jwbvhEunfEzT68Q7fQLpJ2tw"
+                primary_key_valid_until: '2024-02-17T11:16:50Z'
+                secondary_key_valid_until: '2024-03-03T11:16:50Z'
+  "/v1/c/fire_log":
+    get:
+      summary: fire_log
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 1
+      responses:
+        '200':
+          description: Get Fire Log
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  visitors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        phone:
+                          nullable: true
+                        check_in:
+                          type: string
+                        custom_attributes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                              value:
+                                type: string
+                              include_in_fire_log:
+                                type: boolean
+                            required:
+                            - id
+                            - name
+                            - value
+                        visited_people:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              id:
+                                type: integer
+                            required:
+                            - name
+                            - id
+                      required:
+                      - id
+                      - first_name
+                      - last_name
+                      - phone
+                      - check_in
+                      - custom_attributes
+                      - visited_people
+                  residents:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        phone:
+                          type: string
+                        check_in:
+                          type: string
+                        custom_attributes:
+                          type: array
+                          items: {}
+                        visited_people:
+                          type: array
+                          items: {}
+                      required:
+                      - id
+                      - first_name
+                      - last_name
+                      - phone
+                      - check_in
+                      - custom_attributes
+                      - visited_people
+                  staff:
+                    type: array
+                    items: {}
+                  contractors:
+                    type: array
+                    items: {}
+                  industry_professionals:
+                    type: array
+                    items: {}
+                  other:
+                    type: array
+                    items: {}
+                required:
+                - visitors
+                - residents
+                - staff
+                - contractors
+                - industry_professionals
+                - other
+              example:
+                visitors:
+                - id: 1
+                  first_name: John
+                  last_name: Smith
+                  phone:
+                  check_in: 11:16am
+                  custom_attributes:
+                  - id: 1
+                    name: Car Registration
+                    value: SM1F33
+                  visited_people:
+                  - name: Delia Smith
+                    id: 1
+                residents:
+                - id: 2
+                  first_name: Delia
+                  last_name: Smith
+                  phone: '07000123456'
+                  check_in: Resident
+                  custom_attributes: []
+                  visited_people: []
+                staff: []
+                contractors: []
+                industry_professionals: []
+                other: []
+  "/v1/c/list_api_keys":
+    get:
+      summary: list_api_keys
+      tags:
+      - Config
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      responses:
+        '200':
+          description: Returns your API Keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  primary_key:
+                    type: string
+                  secondary_key:
+                    type: string
+                  primary_key_valid_until:
+                    type: string
+                  secondary_key_valid_until:
+                    type: string
+                required:
+                - primary_key
+                - secondary_key
+                - primary_key_valid_until
+                - secondary_key_valid_until
+              example:
+                primary_key: my primary key string
+                secondary_key: my secondary key string
+                primary_key_valid_until: '2024-02-10T11:16:50Z'
+                secondary_key_valid_until: '2024-02-25T11:16:50Z'
+  "/v1/c/list_locations":
+    get:
+      summary: list_locations
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      responses:
+        '200':
+          description: Lists Locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    hidden:
+                      type: boolean
+                  required:
+                  - id
+                  - name
+                  - hidden
+              example:
+              - id: 1
+                name: Main building
+                hidden: false
+              - id: 2
+                name: Second building
+                hidden: true
