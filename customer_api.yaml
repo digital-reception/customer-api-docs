@@ -49,9 +49,93 @@ paths:
                 - secondary_key_valid_until
               example:
                 primary_key: my secondary key string
-                secondary_key: "-3NVWmE1ydkQ9SwqNT90jwbvhEunfEzT68Q7fQLpJ2tw"
-                primary_key_valid_until: '2024-02-17T11:16:50Z'
-                secondary_key_valid_until: '2024-03-03T11:16:50Z'
+                secondary_key: f28ixEd-yIRk_t2py1cGewnavWl_9Rc-AtM4ABbTaZDw
+                primary_key_valid_until: '2024-05-10T13:43:29Z'
+                secondary_key_valid_until: '2024-05-25T13:43:29Z'
+  "/v1/c/events":
+    get:
+      summary: events
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 1
+      - name: month
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 0
+      responses:
+        '200':
+          description: Get Events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    person_name:
+                      type: string
+                    type_of_person:
+                      type: string
+                    check_in:
+                      type: string
+                    check_out:
+                      type: string
+                    device_check_out:
+                      type: boolean
+                    reported_check_out:
+                      type: boolean
+                    location:
+                      type: string
+                    visited_people:
+                      type: integer
+                    unassigned_visited_people:
+                      type: integer
+                    photo_taken:
+                      type: boolean
+                    duration:
+                      type: string
+                  required:
+                  - id
+                  - person_name
+                  - type_of_person
+                  - check_in
+                  - check_out
+                  - device_check_out
+                  - reported_check_out
+                  - location
+                  - visited_people
+                  - unassigned_visited_people
+                  - photo_taken
+                  - duration
+              example:
+              - id: adaae925-c48f-4341-bae3-1bf138033311
+                person_name: John Smith
+                type_of_person: Visitor
+                check_in: '2024-04-25T14:43:29.476+01:00'
+                check_out: N/A
+                device_check_out: false
+                reported_check_out: false
+                location: Main building
+                visited_people: 1
+                unassigned_visited_people: 0
+                photo_taken: false
+                duration: N/A
   "/v1/c/fire_log":
     get:
       summary: fire_log
@@ -184,7 +268,7 @@ paths:
                   first_name: John
                   last_name: Smith
                   phone:
-                  check_in: 11:16am
+                  check_in: 2:43pm
                   custom_attributes:
                   - id: 1
                     name: Car Registration
@@ -240,8 +324,8 @@ paths:
               example:
                 primary_key: my primary key string
                 secondary_key: my secondary key string
-                primary_key_valid_until: '2024-02-10T11:16:50Z'
-                secondary_key_valid_until: '2024-02-25T11:16:50Z'
+                primary_key_valid_until: '2024-05-03T13:43:29Z'
+                secondary_key_valid_until: '2024-05-18T13:43:29Z'
   "/v1/c/list_locations":
     get:
       summary: list_locations
@@ -281,3 +365,87 @@ paths:
               - id: 2
                 name: Second building
                 hidden: true
+  "/v1/c/outstanding_actions":
+    get:
+      summary: outstanding_actions
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 1
+      - name: month
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 0
+      responses:
+        '200':
+          description: Get Outstanding Actions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    status:
+                      type: string
+                    problem:
+                      type: string
+                    problem_type:
+                      type: string
+                    date_of_problem:
+                      type: string
+                    location:
+                      type: string
+                    person_name:
+                      type: string
+                    type_of_person:
+                      type: string
+                    action_id:
+                      type: integer
+                    action_type:
+                      type: string
+                    action_outcome:
+                      type: string
+                    user_name:
+                      type: string
+                  required:
+                  - id
+                  - status
+                  - problem
+                  - problem_type
+                  - date_of_problem
+                  - location
+                  - person_name
+                  - type_of_person
+                  - action_id
+                  - action_type
+                  - action_outcome
+                  - user_name
+              example:
+              - id: 1
+                status: open
+                problem: Broken lightbulb
+                problem_type: Maintenance
+                date_of_problem: '2024-04-25T13:43:29.725Z'
+                location: Main building
+                person_name: Delia Smith
+                type_of_person: Resident
+                action_id: 1
+                action_type: Phone Call
+                action_outcome: Maintenance slot booked for Friday
+                user_name: Test User
