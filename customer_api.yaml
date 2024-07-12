@@ -49,9 +49,9 @@ paths:
                 - secondary_key_valid_until
               example:
                 primary_key: my secondary key string
-                secondary_key: f28ixEd-yIRk_t2py1cGewnavWl_9Rc-AtM4ABbTaZDw
-                primary_key_valid_until: '2024-05-10T13:43:29Z'
-                secondary_key_valid_until: '2024-05-25T13:43:29Z'
+                secondary_key: T_xV7hnehgqB0cJoCA-FbQGjDzzr1118qG0njy8m01Rw
+                primary_key_valid_until: '2024-07-30T11:42:51Z'
+                secondary_key_valid_until: '2024-08-14T11:42:51Z'
   "/v1/c/events":
     get:
       summary: events
@@ -124,10 +124,10 @@ paths:
                   - photo_taken
                   - duration
               example:
-              - id: adaae925-c48f-4341-bae3-1bf138033311
+              - id: c4ba5661-c7df-43e9-aedd-c1042e2e03a2
                 person_name: John Smith
                 type_of_person: Visitor
-                check_in: '2024-04-25T14:43:29.476+01:00'
+                check_in: '2024-07-15T12:42:51.793+01:00'
                 check_out: N/A
                 device_check_out: false
                 reported_check_out: false
@@ -136,6 +136,78 @@ paths:
                 unassigned_visited_people: 0
                 photo_taken: false
                 duration: N/A
+  "/v1/c/feedback":
+    get:
+      summary: feedback
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 1
+      - name: month
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 0
+      responses:
+        '200':
+          description: Get Feedback
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    person_name:
+                      type: string
+                    type_of_person:
+                      type: string
+                    question_type:
+                      type: string
+                    question:
+                      type: string
+                    answer:
+                      type: string
+                    answered_at:
+                      type: string
+                    action_needed:
+                      type: boolean
+                    action_status:
+                      type: string
+                  required:
+                  - id
+                  - person_name
+                  - type_of_person
+                  - question_type
+                  - question
+                  - answer
+                  - answered_at
+                  - action_needed
+                  - action_status
+              example:
+              - id: 3dedc5a3-afa0-4e18-a38e-3d8fb4de6b92
+                person_name: John Smith
+                type_of_person: Visitor
+                question_type: Stars
+                question: Was the home safe?
+                answer: 5 Stars
+                answered_at: '2024-07-15T12:42:51.975+01:00'
+                action_needed: false
+                action_status: N/A
   "/v1/c/fire_log":
     get:
       summary: fire_log
@@ -268,7 +340,7 @@ paths:
                   first_name: John
                   last_name: Smith
                   phone:
-                  check_in: 2:43pm
+                  check_in: 12:42pm
                   custom_attributes:
                   - id: 1
                     name: Car Registration
@@ -324,8 +396,8 @@ paths:
               example:
                 primary_key: my primary key string
                 secondary_key: my secondary key string
-                primary_key_valid_until: '2024-05-03T13:43:29Z'
-                secondary_key_valid_until: '2024-05-18T13:43:29Z'
+                primary_key_valid_until: '2024-07-23T11:42:51Z'
+                secondary_key_valid_until: '2024-08-07T11:42:51Z'
   "/v1/c/list_locations":
     get:
       summary: list_locations
@@ -441,7 +513,7 @@ paths:
                 status: open
                 problem: Broken lightbulb
                 problem_type: Maintenance
-                date_of_problem: '2024-04-25T13:43:29.725Z'
+                date_of_problem: '2024-07-15T11:42:52.168Z'
                 location: Main building
                 person_name: Delia Smith
                 type_of_person: Resident
