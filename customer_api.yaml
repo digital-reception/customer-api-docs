@@ -188,6 +188,10 @@ paths:
                       type: boolean
                     action_status:
                       type: string
+                    outstanding_action_id:
+                      type: string
+                    outstanding_action_status:
+                      type: string
                   required:
                   - id
                   - person_name
@@ -197,17 +201,17 @@ paths:
                   - answer
                   - answered_at
                   - action_needed
-                  - action_status
               example:
-              - id: 3dedc5a3-afa0-4e18-a38e-3d8fb4de6b92
+              - id: 6f1a61b4-2bcb-4b6d-bdaf-1b2380ee90e7
                 person_name: John Smith
                 type_of_person: Visitor
                 question_type: Stars
                 question: Was the home safe?
                 answer: 5 Stars
-                answered_at: '2024-07-15T12:42:51.975+01:00'
+                answered_at: '2024-07-22T12:06:17.554+01:00'
                 action_needed: false
-                action_status: N/A
+                outstanding_action_id: N/A
+                outstanding_action_status: N/A
   "/v1/c/fire_log":
     get:
       summary: fire_log
