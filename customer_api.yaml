@@ -525,3 +525,60 @@ paths:
                 action_type: Phone Call
                 action_outcome: Maintenance slot booked for Friday
                 user_name: Test User
+  "/v1/c/users":
+    get:
+      summary: users
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      responses:
+        '200':
+          description: Get Users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    access_level:
+                      type: string
+                    last_login:
+                      nullable: true
+                      type: string
+                    external_sign_on_only:
+                      type: boolean
+                    locations:
+                      type: string
+                    inactive:
+                      type: boolean
+                  required:
+                  - id
+                  - first_name
+                  - last_name
+                  - access_level
+                  - last_login
+                  - external_sign_on_only
+                  - locations
+                  - inactive
+              example:
+              - id: 1
+                first_name: Test
+                last_name: User
+                access_level: admin, reporting
+                last_login: '2024-08-22T14:29:36.000Z'
+                external_sign_on_only: false
+                locations: ''
+                inactive: false
