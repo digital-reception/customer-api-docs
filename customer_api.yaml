@@ -49,9 +49,9 @@ paths:
                 - secondary_key_valid_until
               example:
                 primary_key: my secondary key string
-                secondary_key: T_xV7hnehgqB0cJoCA-FbQGjDzzr1118qG0njy8m01Rw
-                primary_key_valid_until: '2024-07-30T11:42:51Z'
-                secondary_key_valid_until: '2024-08-14T11:42:51Z'
+                secondary_key: 5bDwbwkagEGi9UP6-WTNhwqmkcxLS_2S2GyV5wN1ethQ
+                primary_key_valid_until: '2026-03-13T10:30:52Z'
+                secondary_key_valid_until: '2026-03-28T10:30:52Z'
   "/v1/c/events":
     get:
       summary: events
@@ -124,10 +124,10 @@ paths:
                   - photo_taken
                   - duration
               example:
-              - id: c4ba5661-c7df-43e9-aedd-c1042e2e03a2
+              - id: 46b5b40f-b74c-429e-90bc-4b034727280a
                 person_name: John Smith
                 type_of_person: Visitor
-                check_in: '2024-07-15T12:42:51.793+01:00'
+                check_in: '2026-02-26T10:30:53.198+00:00'
                 check_out: N/A
                 device_check_out: false
                 reported_check_out: false
@@ -202,13 +202,13 @@ paths:
                   - answered_at
                   - action_needed
               example:
-              - id: 6f1a61b4-2bcb-4b6d-bdaf-1b2380ee90e7
+              - id: a96a01f1-e8e7-4669-b773-2c99dbd465c1
                 person_name: John Smith
                 type_of_person: Visitor
                 question_type: Stars
                 question: Was the home safe?
-                answer: 5 Stars
-                answered_at: '2024-07-22T12:06:17.554+01:00'
+                answer: 5/5 Stars
+                answered_at: '2026-02-26T10:30:53.447+00:00'
                 action_needed: false
                 outstanding_action_id: N/A
                 outstanding_action_status: N/A
@@ -344,7 +344,7 @@ paths:
                   first_name: John
                   last_name: Smith
                   phone:
-                  check_in: 12:42pm
+                  check_in: 10:30am
                   custom_attributes:
                   - id: 1
                     name: Car Registration
@@ -400,8 +400,8 @@ paths:
               example:
                 primary_key: my primary key string
                 secondary_key: my secondary key string
-                primary_key_valid_until: '2024-07-23T11:42:51Z'
-                secondary_key_valid_until: '2024-08-07T11:42:51Z'
+                primary_key_valid_until: '2026-03-06T10:30:52Z'
+                secondary_key_valid_until: '2026-03-21T10:30:52Z'
   "/v1/c/list_locations":
     get:
       summary: list_locations
@@ -517,7 +517,7 @@ paths:
                 status: open
                 problem: Broken lightbulb
                 problem_type: Maintenance
-                date_of_problem: '2024-07-15T11:42:52.168Z'
+                date_of_problem: '2026-02-26T10:30:53.896Z'
                 location: Main building
                 person_name: Delia Smith
                 type_of_person: Resident
@@ -525,6 +525,139 @@ paths:
                 action_type: Phone Call
                 action_outcome: Maintenance slot booked for Friday
                 user_name: Test User
+  "/v1/c/past_fire_log":
+    get:
+      summary: past_fire_log
+      tags:
+      - API
+      parameters:
+      - name: id
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 1
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      responses:
+        '200':
+          description: Show a Fire Log Record
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  submitted_by:
+                    type: string
+                  completed_on_device:
+                    type: boolean
+                  online:
+                    type: boolean
+                  notes:
+                    type: string
+                  people:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        type_of_person:
+                          type: string
+                        check_in:
+                          type: string
+                        checked:
+                          type: boolean
+                      required:
+                      - id
+                      - name
+                      - type_of_person
+                      - check_in
+                      - checked
+                required:
+                - submitted_by
+                - completed_on_device
+                - online
+                - notes
+                - people
+              example:
+                submitted_by: Test User
+                completed_on_device: false
+                online: true
+                notes: This is an example.
+                people:
+                - id: 4
+                  name: Delia Smith
+                  type_of_person: resident
+                  check_in: resident
+                  checked: false
+                - id: 2
+                  name: Jane Smith
+                  type_of_person: visitor
+                  check_in: 5:00pm
+                  checked: false
+                - id: 3
+                  name: Johnny Smith
+                  type_of_person: visitor
+                  check_in: 4:00pm
+                  checked: false
+  "/v1/c/past_fire_logs":
+    get:
+      summary: past_fire_logs
+      tags:
+      - API
+      parameters:
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        example: my primary key string
+      - name: location_id
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 1
+      - name: month
+        in: query
+        required: false
+        schema:
+          type: integer
+        example: 0
+      responses:
+        '200':
+          description: Get Fire Log Records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    created_at:
+                      type: string
+                    submitted_by:
+                      type: string
+                  required:
+                  - id
+                  - created_at
+                  - submitted_by
+              example:
+              - id: 1
+                created_at: '2026-02-26T10:30:53.704+00:00'
+                submitted_by: Test User
+              - id: 2
+                created_at: '2026-02-19T10:30:53.706+00:00'
+                submitted_by: Test User
   "/v1/c/users":
     get:
       summary: users
@@ -578,7 +711,7 @@ paths:
                 first_name: Test
                 last_name: User
                 access_level: admin, reporting
-                last_login: '2024-08-22T14:29:36.000Z'
+                last_login: '2026-02-19T10:30:53.000Z'
                 external_sign_on_only: false
                 locations: ''
                 inactive: false
